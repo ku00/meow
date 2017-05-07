@@ -1,6 +1,12 @@
-module Main where
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE OverloadedStrings #-}
 
-import Lib
+import Options.Generic
 
-main :: IO ()
-main = someFunc
+data SearchWord = SearchWord String deriving (Generic, Show)
+
+instance ParseRecord SearchWord
+
+main = do
+    x <- getRecord "Find and display GIFs"
+    print (x :: SearchWord)
