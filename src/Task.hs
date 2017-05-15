@@ -14,3 +14,6 @@ initialize = do
 
 newTask :: String -> IO ()
 newTask fp = generatePath fp >>= \x -> writeFile x ""
+
+addLine :: String -> String -> IO ()
+addLine fp l = generatePath fp >>= \x -> appendFile x (l ++ "\n")
