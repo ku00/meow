@@ -1,6 +1,7 @@
 module Task () where
 
 import System.Directory
+import System.Process
 
 ext = ".meow"
 
@@ -17,3 +18,6 @@ newTask fp = generatePath fp >>= \x -> writeFile x ""
 
 addLine :: String -> String -> IO ()
 addLine fp l = generatePath fp >>= \x -> appendFile x (l ++ "\n")
+
+runTask :: String -> IO ()
+runTask fp = generatePath fp >>= readFile >>= callCommand
