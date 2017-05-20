@@ -14,10 +14,10 @@ initialize = do
     createDirectoryIfMissing True ".meow/tasks"
 
 newTask :: String -> IO ()
-newTask fp = generatePath fp >>= \x -> writeFile x ""
+newTask fp = generatePath fp >>= flip writeFile ""
 
 addLine :: String -> String -> IO ()
-addLine fp l = generatePath fp >>= \x -> appendFile x (l ++ "\n")
+addLine fp l = generatePath fp >>= flip appendFile (l ++ "\n")
 
 runTask :: String -> IO ()
 runTask fp = generatePath fp >>= readFile >>= callCommand
