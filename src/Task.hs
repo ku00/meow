@@ -1,11 +1,16 @@
 module Task
-    ( newTask
+    ( TaskName
+    , TaskLine
+    , newTask
     , addLine
     , runTask
     ) where
 
 import System.Directory
 import System.Process (callCommand)
+
+type TaskName = String
+type TaskLine = String
 
 ext = ".meow"
 
@@ -17,11 +22,11 @@ initialize = do
     getHomeDirectory >>= setCurrentDirectory
     createDirectoryIfMissing True ".meow/tasks"
 
-newTask :: String -> IO ()
+newTask :: TaskName -> IO ()
 newTask fp = generatePath fp >>= flip writeFile ""
 
-addLine :: String -> String -> IO ()
+addLine :: TaskName -> TaskLine -> IO ()
 addLine fp l = generatePath fp >>= flip appendFile (l ++ "\n")
 
-runTask :: String -> IO ()
+runTask :: TaskName -> IO ()
 runTask fp = generatePath fp >>= readFile >>= callCommand

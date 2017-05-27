@@ -5,13 +5,10 @@ import Data.Semigroup ((<>))
 
 import Task
 
-type Task = String
-type Line = String
-
 data Command
-    = New Task
-    | Add Task Line
-    | Run Task
+    = New TaskName
+    | Add TaskName TaskLine
+    | Run TaskName
     deriving (Show)
 
 parseNew :: Parser Command
