@@ -32,13 +32,11 @@ parseCommand = subparser $
   command "run" (parseRun `withInfo` "Run a task")
 
 parseInfo :: ParserInfo Command
-parseInfo = parseCommand `withInfo` "Meow is a command group management tool"
-
-run :: Command -> IO ()
-run cmd = case cmd of
-            New t -> newTask t
-            Add t l -> addLine t l
-            Run t -> runTask t
+parseInfo = parseCommand `withInfo` "Meow is the command group (task) management tool"
 
 execCommand :: IO ()
 execCommand = execParser parseInfo >>= run
+  where run cmd = case cmd of
+                    New t -> newTask t
+                    Add t l -> addLine t l
+                    Run t -> runTask t
