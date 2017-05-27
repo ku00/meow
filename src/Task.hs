@@ -1,6 +1,7 @@
 module Task
   ( TaskName
   , TaskLine
+  , initialize
   , newTask
   , addLine
   , runTask

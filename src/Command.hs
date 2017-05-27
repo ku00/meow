@@ -6,10 +6,14 @@ import Data.Semigroup ((<>))
 import Task
 
 data Command
-  = New TaskName
+  = Init
+  | New TaskName
   | Add TaskName TaskLine
   | Run TaskName
   deriving (Show)
+
+parseInit :: Parser Command
+parseInit = pure Init
 
 parseNew :: Parser Command
 parseNew = New <$> argument str (metavar "[TASK_NAME]")
@@ -27,6 +31,7 @@ withInfo opts desc = info (helper <*> opts) $ progDesc desc
 
 parseCommand :: Parser Command
 parseCommand = subparser $
+  command "init" (parseInit `withInfo` "Create task file directories") <>
   command "new" (parseNew `withInfo` "Create a task") <>
   command "add" (parseAdd `withInfo` "Add a task line") <>
   command "run" (parseRun `withInfo` "Run a task")
@@ -37,6 +42,7 @@ parseInfo = parseCommand `withInfo` "Meow is the command group (task) management
 execCommand :: IO ()
 execCommand = execParser parseInfo >>= run
   where run cmd = case cmd of
+                    Init -> initialize
                     New t -> newTask t
                     Add t l -> addLine t l
                     Run t -> runTask t
