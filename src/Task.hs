@@ -1,10 +1,10 @@
 module Task
-    ( TaskName
-    , TaskLine
-    , newTask
-    , addLine
-    , runTask
-    ) where
+  ( TaskName
+  , TaskLine
+  , newTask
+  , addLine
+  , runTask
+  ) where
 
 import System.Directory
 import System.Process (callCommand)
@@ -19,8 +19,8 @@ generatePath fp = getHomeDirectory >>= \x -> return $ concat [x, "/.meow/tasks/"
 
 initialize :: IO ()
 initialize = do
-    getHomeDirectory >>= setCurrentDirectory
-    createDirectoryIfMissing True ".meow/tasks"
+  getHomeDirectory >>= setCurrentDirectory
+  createDirectoryIfMissing True ".meow/tasks"
 
 newTask :: TaskName -> IO ()
 newTask fp = generatePath fp >>= flip writeFile ""
