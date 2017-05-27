@@ -3,6 +3,8 @@ module Command (execCommand) where
 import Options.Applicative
 import Data.Semigroup ((<>))
 
+import Task
+
 type Task = String
 type Line = String
 
@@ -35,5 +37,11 @@ parseCommand = subparser $
 parseInfo :: ParserInfo Command
 parseInfo = parseCommand `withInfo` "Meow is a command group management tool"
 
-execCommand :: IO Command
-execCommand = execParser parseInfo
+run :: Command -> IO ()
+run cmd = case cmd of
+              New t -> newTask t
+              Add t l -> addLine t l
+              Run t -> runTask t
+
+execCommand :: IO ()
+execCommand = execParser parseInfo >>= run

@@ -1,7 +1,11 @@
-module Task () where
+module Task
+    ( newTask
+    , addLine
+    , runTask
+    ) where
 
 import System.Directory
-import System.Process
+import System.Process (callCommand)
 
 ext = ".meow"
 
